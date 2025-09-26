@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aerial Roof Measurements</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a202c;
+        }
+        /* Custom styles for the message modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 24px;
+            border-radius: 8px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+        .modal-close-btn {
+            background-color: #4f46e5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Message Modal -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <div id="modal-title" class="modal-header"></div>
+            <div id="modal-body" class="modal-body"></div>
+            <button id="modal-close-btn" class="modal-close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-800">Aerial Roof Measurements</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-600 hover:text-gray-900 transition-colors">About Us</a>
+                <a href="#services" class="text-gray-600 hover:text-gray-900 transition-colors">Services</a>
+                <a href="#gallery" class="text-gray-600 hover:text-gray-900 transition-colors">Reports Gallery</a>
+                <a href="#account" class="text-gray-600 hover:text-gray-900 transition-colors">Account</a>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <a href="#about" class="block py-2 px-4 text-gray-600 hover:bg-gray-100 transition-colors">About Us</a>
+            <a href="#services" class="block py-2 px-4 text-gray-600 hover:bg-gray-100 transition-colors">Services</a>
+            <a href="#gallery" class="block py-2 px-4 text-gray-600 hover:bg-gray-100 transition-colors">Reports Gallery</a>
+            <a href="#account" class="block py-2 px-4 text-gray-600 hover:bg-gray-100 transition-colors">Account</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-gray-900 text-white py-20 md:py-32" id="hero">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Aerial Rooftop Measurements</h1>
+                <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8">
+                    Providing accurate and reliable measurement reports for residential and commercial properties.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <a href="#services" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-full hover:bg-indigo-700 transition-colors shadow-lg">Our Services</a>
+                    <button id="order-report-btn" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition-colors shadow-lg">Order a Report</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="py-16 md:py-24" id="about">
+            <div class="container mx-auto px-4">
+                <div class="md:flex md:space-x-12 items-center">
+                    <div class="md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Accurate Aerial Roof Measurements and 3D Wall Reports</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Each roof report is written by a group of highly skilled and experienced technicians and then assembled into informative and succinct, eco-friendly reports. Our professional roof reports makes you stand apart from your competition, you can rely on our unparalleled response time and hundred percent accuracy rate or greater. Our first goal is customer care and commitment; hence we provide cutting-edge products and services.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed">
+                            Insurance agencies, roofers, contractors, insurance companies, and property managers can utilize our advanced satellite and aerial measurements to get the most precise measurements online. Using just a physical address, we could create Aerial reports that contain the area of each component, the pitch, and the length of ridges, hips, valley, rakes and eaves etc.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2 mt-8 md:mt-0">
+                        <img src="https://i.postimg.cc/GpWy6Xxf/Screenshot-2025-09-23-212618.png" alt="Aerial view of a roof for measurement" class="w-full h-auto rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="bg-gray-100 py-16 md:py-24" id="services">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12">ORDER NOW FOR QUICK AND ACCURATE MEASUREMENTS</h2>
+                <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Aerial Rooftop Measurement provides accurate roof measurements in .esx format and .pdf format for use with Xactimate, at affordable prices. We also provide 3D Wall measurement reports in .esx format and .pdf format.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service Card 1: Residential -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-indigo-600 mb-4 inline-block">
+                            <!-- SVG for Residential Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-10l-2-2m2 2v10a1 1 0 01-1 1h-3m-6 0v-9a2 2 0 00-2-2H9a2 2 0 00-2 2v9m6 3h6" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Residential Reports</h3>
+                        <p class="text-gray-600">
+                            Receive accurate roof measurements for residential properties.
+                        </p>
+                        <p class="mt-4 text-lg font-bold text-indigo-600">
+                            Only $23 for .esx format and with pdf $25
+                        </p>
+                    </div>
+                    <!-- Service Card 2: Commercial -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-indigo-600 mb-4 inline-block">
+                            <!-- SVG for Commercial Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 10h6M9 14h6" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Commercial Reports</h3>
+                        <p class="text-gray-600">
+                            Detailed and precise measurements for large commercial buildings.
+                        </p>
+                        <p class="mt-4 text-lg font-bold text-indigo-600">
+                            Only $38 per report .esx format and with pdf $40
+                        </p>
+                    </div>
+                    <!-- Service Card 3: Wall Report -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-indigo-600 mb-4 inline-block">
+                            <!-- SVG for 3D Wall Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">3D Wall Reports</h3>
+                        <p class="text-gray-600">
+                            Get accurate 3D wall measurement reports.
+                        </p>
+                        <p class="mt-4 text-lg font-bold text-indigo-600">
+                            Only $28 .esx format and with pdf $30
+                        </p>
+                        <p class="text-sm mt-2 text-gray-500">(Prices may vary for Commercial buildings)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Gallery Section -->
+        <section class="py-16 md:py-24" id="gallery">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12">Our Reports Gallery</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Gallery Item 1 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <img src="https://i.postimg.cc/GpWy6Xxf/Screenshot-2025-09-23-212618.png" alt="Example of a residential aerial report" class="w-full h-auto rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2">Residential Report</h3>
+                        <p class="text-gray-600">A detailed report showing the dimensions and pitch of a residential roof.</p>
+                    </div>
+                    <!-- Gallery Item 2 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <img src="https://placehold.co/600x400/007bff/ffffff?text=Commercial+Report" alt="Example of a commercial aerial report" class="w-full h-auto rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2">Commercial Report</h3>
+                        <p class="text-gray-600">A complex commercial roof layout with precise measurements for large-scale projects.</p>
+                    </div>
+                    <!-- Gallery Item 3 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <img src="https://placehold.co/600x400/8c52ff/ffffff?text=3D+Wall+Report" alt="Example of a 3D wall report" class="w-full h-auto rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2">3D Wall Report</h3>
+                        <p class="text-gray-600">A visual representation of wall measurements in a 3D format.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account & Order Report Section -->
+        <section class="py-16 md:py-24" id="account">
+            <div class="container mx-auto px-4">
+                <div class="md:flex md:space-x-12 items-center justify-center">
+                    <div class="md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Your Account</h2>
+                        
+                        <div id="auth-forms" class="bg-white p-8 rounded-lg shadow-xl">
+                            <!-- Sign Up Form -->
+                            <form id="signup-form">
+                                <h3 class="text-2xl font-semibold mb-4 text-center">Sign Up</h3>
+                                <div class="mb-4">
+                                    <label for="signup-name" class="block text-gray-700 font-bold mb-2">Name</label>
+                                    <input type="text" id="signup-name" name="name" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="signup-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                                    <input type="email" id="signup-email" name="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="signup-password" class="block text-gray-700 font-bold mb-2">Password</label>
+                                    <input type="password" id="signup-password" name="password" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                                </div>
+                                <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">Sign Up</button>
+                                <p class="mt-4 text-center text-sm text-gray-500">Already have an account? <a href="#" id="show-login" class="text-indigo-600 hover:underline font-bold">Log in here</a></p>
+                            </form>
+
+                            <!-- Login Form -->
+                            <form id="login-form" class="hidden">
+                                <h3 class="text-2xl font-semibold mb-4 text-center">Log In</h3>
+                                <div class="mb-4">
+                                    <label for="login-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                                    <input type="email" id="login-email" name="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="login-password" class="block text-gray-700 font-bold mb-2">Password</label>
+                                    <input type="password" id="login-password" name="password" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                                </div>
+                                <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">Log In</button>
+                                <p class="mt-4 text-center text-sm text-gray-500">Don't have an account? <a href="#" id="show-signup" class="text-indigo-600 hover:underline font-bold">Sign up here</a></p>
+                            </form>
+                        </div>
+                        
+                        <!-- Logged-in User Info and Order Section -->
+                        <div id="user-info" class="mt-8 text-center hidden">
+                            <h3 class="text-xl font-bold">Welcome, <span id="user-name"></span>!</h3>
+                            <p class="text-gray-600 mt-2">Your user ID is: <span id="user-id" class="font-mono text-sm text-gray-800 break-all"></span></p>
+
+                            <!-- Location Lookup Section -->
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-semibold mb-4 text-center">Location Lookup</h3>
+                                <p class="text-gray-600 mb-4">Click on the map or search for an address to find the coordinates for your report.</p>
+                                <div class="mb-4">
+                                    <div class="flex space-x-2">
+                                        <input type="text" id="map-search-input" placeholder="Enter an address" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                                        <button id="map-search-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Search</button>
+                                    </div>
+                                </div>
+                                <div id="map-container" class="relative">
+                                    <div id="map" class="rounded-lg shadow-lg"></div>
+                                    <div id="map-loading" class="absolute inset-0 bg-gray-200 bg-opacity-75 flex items-center justify-center rounded-lg hidden">
+                                        <div class="text-center">
+                                            <div class="animate-spin rounded-full h-12 w-12 border-4 border-dashed border-indigo-500 mx-auto"></div>
+                                            <p class="mt-2 text-gray-700">Loading map...</p>
+                                        </div>
+                                    </div>
+                                    <div id="map-error" class="absolute inset-0 bg-red-100 text-red-700 p-4 rounded-lg items-center justify-center hidden">
+                                        <p class="font-bold">Map failed to load.</p>
+                                        <p class="text-sm mt-2">Please ensure you have a valid Google Maps API key.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Order Report Section -->
+                            <div class="mt-8" id="order-report-section">
+                                <h3 class="text-2xl font-semibold mb-4 text-center">Ready to Place Your Order!</h3>
+                                <!-- This div will be shown after a successful order -->
+                                <div id="payment-confirmation" class="hidden bg-green-100 text-green-700 p-6 rounded-lg shadow-inner">
+                                    <h4 class="font-bold text-lg">Thank You for Your Order!</h4>
+                                    <p class="mt-2">Your report request has been successfully submitted and is being processed. You will receive an email confirmation shortly.</p>
+                                    <button id="go-home-btn" class="mt-4 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors">Go Home</button>
+                                </div>
+                                <!-- This form will be hidden after a successful order -->
+                                <form id="report-order-form" class="bg-gray-100 p-6 rounded-lg shadow-inner">
+                                    <div class="mb-4">
+                                        <label for="order-type" class="block text-gray-700 font-bold mb-2">Order Type</label>
+                                        <select id="order-type" name="orderType" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                                            <option value="">Select a report type</option>
+                                            <option value="Residential (ESX)">Residential (ESX)</option>
+                                            <option value="Residential (ESX + Full Report)">Residential (ESX + Full Report)</option>
+                                            <option value="Residential (Wall Report ESX)">Residential (Wall Report ESX)</option>
+                                            <option value="Residential (Wall Report ESX + Full Report)">Residential (Wall Report ESX + Full Report)</option>
+                                            <option value="Commercial (ESX)">Commercial (ESX)</option>
+                                            <option value="Commercial (ESX + Full Report)">Commercial (ESX + Full Report)</option>
+                                            <option value="Commercial (Wall Report ESX)">Commercial (Wall Report ESX)</option>
+                                            <option value="Commercial (Wall Report ESX + Full Report)">Commercial (Wall Report ESX + Full Report)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="report-address" class="block text-gray-700 font-bold mb-2">Address</label>
+                                        <input type="text" id="report-address" name="address" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="e.g., 123 Main St, Anytown, CA" required>
+                                    </div>
+                                    <!-- Combined Latitude/Longitude field -->
+                                    <div class="mb-4">
+                                        <label for="report-coordinates" class="block text-gray-700 font-bold mb-2">Latitude/Longitude</label>
+                                        <input type="text" id="report-coordinates" name="coordinates" class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-200 cursor-not-allowed" placeholder="Coordinates from map will appear here" readonly required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="insured-name" class="block text-gray-700 font-bold mb-2">Insured Name</label>
+                                        <input type="text" id="insured-name" name="insuredName" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="claim-number" class="block text-gray-700 font-bold mb-2">Claim Number</label>
+                                        <input type="text" id="claim-number" name="claimNumber" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                                    </div>
+                                     <div class="mb-4">
+                                        <label for="email-receive" class="block text-gray-700 font-bold mb-2">Email to Receive Order</label>
+                                        <input type="email" id="email-receive" name="emailReceive" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="instructions" class="block text-gray-700 font-bold mb-2">Instructions</label>
+                                        <textarea id="instructions" name="instructions" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600"></textarea>
+                                    </div>
+                                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">Place Order</button>
+                                </form>
+                            </div>
+
+                            <!-- New section to display user's reports -->
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-semibold mb-4 text-center">Your Reports</h3>
+                                <div id="reports-list" class="space-y-4">
+                                    <p class="text-gray-500">Loading your reports...</p>
+                                </div>
+                            </div>
+
+                            <button id="logout-btn" class="mt-8 bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-colors">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="py-16 md:py-24" id="contact">
+            <div class="container mx-auto px-4">
+                <div class="md:flex md:space-x-12 items-center">
+                    <div class="md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Ready to start your project? Contact us today to discuss your needs and get a free quote. We're excited to hear from you!
+                        </p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li><span class="font-bold">Email:</span> contact@yourcompany.com</li>
+                            <li><span class="font-bold">Phone:</span> (123) 456-7890</li>
+                            <li><span class="font-bold">Address:</span> 123 Business Lane, Suite 100, City, State 12345</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 mt-8 md:mt-0">
+                        <form action="#" method="POST" class="bg-white p-8 rounded-lg shadow-xl">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="block text-gray-700 font-bold mb-2">Message</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 Aerial Rooftop Measurements. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Google Maps API Script -->
+    <!-- IMPORTANT: You MUST replace YOUR_GOOGLE_MAPS_API_KEY with a valid API key from the Google Cloud Console. -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=maps,geocoding,marker" onerror="handleMapError()"></script>
+
+    <!-- Firebase SDK Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, query, where, serverTimestamp, addDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        setLogLevel('debug');
+
+        // Global variables provided by the environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        // Firebase instances
+        let db, auth;
+        let userId;
+
+        // Google Maps variables
+        let map, marker, geocoder;
+        const defaultLocation = { lat: 39.8283, lng: -98.5795 }; // Center of the US
+
+        // Message Modal Functions
+        function showMessage(title, message) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = message;
+            document.getElementById('message-modal').style.display = 'flex';
+        }
+        document.getElementById('modal-close-btn').addEventListener('click', () => {
+            document.getElementById('message-modal').style.display = 'none';
+        });
+
+        // Initialize Firebase
+        function initializeFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                setupAuthListener();
+                console.log("Firebase initialized successfully.");
+            } catch (error) {
+                console.error("Firebase initialization error:", error);
+                showMessage('Error', 'Failed to initialize Firebase.');
+            }
+        }
+
+        // Handle Maps API script loading error
+        window.handleMapError = () => {
+            document.getElementById('map-loading').classList.add('hidden');
+            document.getElementById('map-error').classList.add('flex');
+            document.getElementById('map-error').classList.remove('hidden');
+        };
+
+        // Initialize Google Maps
+        window.initMap = async function() {
+            console.log("Initializing map...");
+            document.getElementById('map-loading').classList.remove('hidden');
+            document.getElementById('map-error').classList.add('hidden');
+            try {
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+                const { Geocoder } = await google.maps.importLibrary("geocoding");
+                geocoder = new Geocoder();
+                
+                // Get last known location from Firestore to center the map
+                let initialCoords = defaultLocation;
+                if (userId) {
+                    const userDocRef = doc(db, 'artifacts', appId, 'users', userId, 'profile', 'data');
+                    const userDocSnap = await getDoc(userDocRef);
+                    if (userDocSnap.exists()) {
+                        const data = userDocSnap.data();
+                        if (data.lastCoordinates) {
+                            initialCoords = data.lastCoordinates;
+                        }
+                    }
+                }
+                
+                map = new Map(document.getElementById("map"), {
+                    center: initialCoords,
+                    zoom: 4,
+                    mapId: "DEMO_MAP_ID",
+                });
+
+                marker = new AdvancedMarkerElement({
+                    map: map,
+                    position: initialCoords,
+                    gmpDraggable: true,
+                });
+
+                // Update coordinate input on marker drag
+                marker.addListener("dragend", () => {
+                    const position = marker.position;
+                    const coords = { lat: position.lat, lng: position.lng };
+                    document.getElementById('report-coordinates').value = `${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`;
+                    saveLastCoordinates(coords);
+                });
+
+                // Update coordinate and marker on map click
+                map.addListener("click", (e) => {
+                    marker.position = e.latLng;
+                    const coords = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+                    document.getElementById('report-coordinates').value = `${coords.lat().toFixed(6)}, ${coords.lng().toFixed(6)}`;
+                    saveLastCoordinates(coords);
+                });
+                document.getElementById('map-loading').classList.add('hidden');
+            } catch (error) {
+                console.error("Google Maps initialization error:", error);
+                handleMapError(); // Show a friendly error message on failure
+            }
+        }
+
+        // Save last used coordinates to Firestore
+        async function saveLastCoordinates(coords) {
+            if (!userId) return;
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', userId, 'profile', 'data');
+                await setDoc(userDocRef, { lastCoordinates: coords }, { merge: true });
+                console.log("Last coordinates saved to profile.");
+            } catch (e) {
+                console.error("Error saving coordinates: ", e);
+            }
+        }
+        
+        // Geocode address from search input
+        async function geocodeAddress(address) {
+            try {
+                const { results } = await geocoder.geocode({ address: address });
+                if (results.length > 0) {
+                    const location = results[0].geometry.location;
+                    map.setCenter(location);
+                    map.setZoom(17);
+                    marker.position = location;
+                    document.getElementById('report-coordinates').value = `${location.lat().toFixed(6)}, ${location.lng().toFixed(6)}`;
+                    saveLastCoordinates({ lat: location.lat(), lng: location.lng() });
+                } else {
+                    showMessage('Address Not Found', 'Could not find the address you entered. Please try a different one or click on the map.');
+                }
+            } catch (error) {
+                console.error('Geocoding failed:', error);
+                showMessage('Geocoding Error', 'Failed to search for the address. Please try again.');
+            }
+        }
+
+        // Set up Firebase Auth state listener
+        function setupAuthListener() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    document.getElementById('user-id').innerText = userId;
+                    document.getElementById('user-name').innerText = user.displayName || user.email || 'User';
+                    document.getElementById('auth-forms').classList.add('hidden');
+                    document.getElementById('user-info').classList.remove('hidden');
+
+                    // Initialize the map after authentication is ready
+                    if (window.google) {
+                       window.initMap();
+                    }
+                    
+                    // Listen for real-time updates to user's reports
+                    listenForReports();
+
+                } else {
+                    userId = null;
+                    document.getElementById('user-id').innerText = '';
+                    document.getElementById('user-name').innerText = '';
+                    document.getElementById('auth-forms').classList.remove('hidden');
+                    document.getElementById('user-info').classList.add('hidden');
+                    // Sign in anonymously if no token is available
+                    try {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (error) {
+                        console.error("Authentication failed:", error);
+                        showMessage('Authentication Error', 'Failed to sign in. Please try refreshing the page.');
+                    }
+                }
+            });
+        }
+
+        // Smooth scroll function
+        function smoothScroll(targetId) {
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Handle "Order a Report" button click
+        document.getElementById('order-report-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (userId) {
+                smoothScroll('order-report-section');
+            } else {
+                smoothScroll('auth-forms');
+                showMessage('Login Required', 'Please log in or sign up to place an order.');
+            }
+        });
+
+        // Handle form submissions
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = e.target['signup-email'].value;
+            const password = e.target['signup-password'].value;
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                showMessage('Success', 'Account created successfully!');
+            } catch (error) {
+                console.error("Signup error:", error);
+                showMessage('Signup Failed', error.message);
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = e.target['login-email'].value;
+            const password = e.target['login-password'].value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showMessage('Success', 'Logged in successfully!');
+            } catch (error) {
+                console.error("Login error:", error);
+                showMessage('Login Failed', error.message);
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showMessage('Logged Out', 'You have been logged out.');
+            } catch (error) {
+                console.error("Logout error:", error);
+                showMessage('Logout Failed', 'An error occurred while logging out.');
+            }
+        });
+
+        document.getElementById('show-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+        });
+
+        document.getElementById('show-signup').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+        });
+        
+        document.getElementById('map-search-btn').addEventListener('click', () => {
+            const address = document.getElementById('map-search-input').value;
+            if (address) {
+                geocodeAddress(address);
+            } else {
+                showMessage('Input Missing', 'Please enter an address to search.');
+            }
+        });
+        
+        document.getElementById('report-order-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userId) {
+                showMessage('Login Required', 'Please log in to submit a report request.');
+                return;
+            }
+            
+            const formData = new FormData(e.target);
+            const reportData = Object.fromEntries(formData.entries());
+            reportData.createdAt = serverTimestamp();
+            
+            try {
+                const reportsCol = collection(db, 'artifacts', appId, 'users', userId, 'reports');
+                await addDoc(reportsCol, reportData);
+                // On successful submission, show the payment confirmation and hide the form
+                document.getElementById('report-order-form').classList.add('hidden');
+                document.getElementById('payment-confirmation').classList.remove('hidden');
+                showMessage('Success', 'Your report request has been submitted!');
+            } catch (error) {
+                console.error("Error submitting report:", error);
+                showMessage('Submission Failed', 'An error occurred while submitting your request. Please try again.');
+            }
+        });
+
+        // Handle "Go Home" button on payment confirmation
+        document.getElementById('go-home-btn').addEventListener('click', () => {
+            // Reset the form and show it again
+            document.getElementById('report-order-form').reset();
+            document.getElementById('report-order-form').classList.remove('hidden');
+            document.getElementById('payment-confirmation').classList.add('hidden');
+            smoothScroll('hero');
+        });
+        
+        // Listen for real-time updates to the user's reports
+        function listenForReports() {
+            if (!userId) return;
+            const reportsList = document.getElementById('reports-list');
+            const q = query(collection(db, 'artifacts', appId, 'users', userId, 'reports'));
+
+            onSnapshot(q, (snapshot) => {
+                let reportsHtml = '';
+                if (snapshot.empty) {
+                    reportsHtml = '<p class="text-gray-500">No reports submitted yet.</p>';
+                } else {
+                    snapshot.forEach(doc => {
+                        const report = doc.data();
+                        const timestamp = report.createdAt ? new Date(report.createdAt.seconds * 1000).toLocaleString() : 'N/A';
+                        reportsHtml += `
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg">${report.orderType}</h4>
+                                <p class="text-sm text-gray-600">Address: ${report.address}</p>
+                                <p class="text-sm text-gray-600">Coordinates: ${report.coordinates}</p>
+                                <p class="text-xs text-gray-400 mt-2">Submitted on: ${timestamp}</p>
+                            </div>
+                        `;
+                    });
+                }
+                reportsList.innerHTML = reportsHtml;
+            }, (error) => {
+                console.error("Error listening to reports:", error);
+                reportsList.innerHTML = `<p class="text-red-500">Failed to load reports.</p>`;
+            });
+        }
+        
+        // Start Firebase initialization
+        initializeFirebase();
+
+    </script>
+</body>
+</html>
