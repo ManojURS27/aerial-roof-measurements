@@ -382,8 +382,8 @@
         // ----------------------------------------------------------------------
         // 1. SUPABASE CONFIGURATION - REPLACE WITH YOUR PROJECT DETAILS
         // ----------------------------------------------------------------------
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // e.g., 'https://your-project-ref.supabase.co'
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Found in your Project Settings > API
+        const SUPABASE_URL = 'https://sbutxcojhmgvocxmdlvc.supabase.co'; // e.g., 'https://your-project-ref.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNidXR4Y29qaG1ndm9jeG1kbHZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0MDY0MDUsImV4cCI6MjA3NDk4MjQwNX0.UzcfyulZiXCkv7zXOf9omC3mh_pVLJLMpzs3zOTCV0s'; // Found in your Project Settings > API
         
         // IMPORTANT: In Supabase, you must create a table named 'reports' 
         // with columns like 'address', 'coordinates', 'user_id', 'created_at'.
